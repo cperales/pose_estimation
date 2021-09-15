@@ -1,5 +1,6 @@
 .ipynb_checkpoints/
 *.tm
 env/
+.idea/
 
 movenet.ipynb

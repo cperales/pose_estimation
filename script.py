@@ -232,6 +232,7 @@ keypoint_sit_up = movenet(input_image)
 # define a video capture object
 vid = cv2.VideoCapture(0)
 print()
+mse_array = list()
 while(True):
    # Capture the video frame
    # by frame
@@ -247,7 +248,9 @@ while(True):
    # Run model inference.
    keypoint_with_scores = movenet(input_image)
 
-   print('MSE =', np.mean((keypoint_with_scores - keypoint_sit_up)**2))
+   mse = np.mean((keypoint_with_scores - keypoint_sit_up)**2)
+   print('MSE =', mse)
+   mse_array.append(mse)
 
    # Visualize the predictions with image.
    display_image = tf.expand_dims(image, axis=0)
@@ -269,3 +272,7 @@ while(True):
 vid.release()
 # Destroy all the windows
 cv2.destroyAllWindows()
+
+fig = plt.figure(1)
+plt.plot(np.arange(len(mse_array)), mse_array)
+plt.savefig('mse')
